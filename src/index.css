@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  /* Design tokens — Linear/Raycast dark aesthetic */
+  --color-bg-base: #0d0d0d;
+  --color-bg-surface: #161616;
+  --color-bg-elevated: #1e1e1e;
+  --color-border: #2a2a2a;
+  --color-text-primary: #e8e8e8;
+  --color-text-secondary: #888888;
+  --color-text-muted: #555555;
+  --color-accent: #5e6ad2;         /* Linear purple */
+  --color-accent-hover: #6e7ae2;
+  --color-status-idea: #888888;
+  --color-status-building: #5e6ad2;
+  --color-status-shipped: #4caf50;
+  --color-status-abandoned: #ef4444;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
