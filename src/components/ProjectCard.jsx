@@ -41,6 +41,13 @@ function ProjectCard({ project, onTagClick }) {
           ))}
         </div>
       )}
+      {project.decisions && project.decisions.length > 0 && (
+        <div className="mt-3 pt-3 border-t border-border">
+          <span className="text-text-muted text-xs">
+            {project.decisions.length} {project.decisions.length === 1 ? 'decision' : 'decisions'}
+          </span>
+        </div>
+      )}
     </Link>
   )
 }

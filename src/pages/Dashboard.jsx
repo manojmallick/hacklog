@@ -53,10 +53,24 @@ function Dashboard() {
 
         {/* Project grid or empty state */}
         {filteredProjects.length === 0 ? (
-          <div className="flex items-center justify-center py-24">
+          <div className="flex flex-col items-center justify-center py-24">
             <p className="text-text-muted text-sm">
-              No projects yet — add your first one.
+              {activeTagFilter && activeFilter !== 'All'
+                ? `No ${activeFilter} projects tagged "${activeTagFilter}".`
+                : activeTagFilter
+                ? `No projects tagged "${activeTagFilter}." `
+                : activeFilter !== 'All'
+                ? `No ${activeFilter} projects yet.`
+                : 'No projects yet — add your first one.'}
             </p>
+            {activeTagFilter && (
+              <button
+                onClick={() => setActiveTagFilter(null)}
+                className="mt-2 text-accent text-xs hover:underline"
+              >
+                Clear tag filter
+              </button>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
