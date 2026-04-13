@@ -6,12 +6,14 @@ import { formatDate } from '../lib/utils'
 import StatusBadge from '../components/ui/StatusBadge'
 import TagList from '../components/ui/TagList'
 import ConfirmDialog from '../components/ui/ConfirmDialog'
+import DecisionList from '../components/decisions/DecisionList'
 
 function ProjectDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { projects, deleteProject } = useProjectsContext()
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [isLoggingDecision, setIsLoggingDecision] = useState(false)
 
   const project = projects.find(p => p.id === id)
 
@@ -140,36 +142,14 @@ function ProjectDetail() {
           </div>
         )}
 
-        {/* Decisions section — always rendered */}
+        {/* Decisions section */}
         <div className="mt-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-text-primary font-semibold text-base">Decisions</h2>
-            <button
-              disabled
-              className="text-sm bg-bg-elevated border border-border text-text-secondary px-3 py-1.5 rounded-lg opacity-60 cursor-not-allowed"
-              title="Coming soon"
-            >
-              Log decision
-            </button>
-          </div>
-
-          {!project.decisions || project.decisions.length === 0 ? (
-            <p className="text-text-muted text-sm">
-              No decisions logged yet — hit 'Log decision' to capture your first one.
-            </p>
-          ) : (
-            <div className="flex flex-col gap-3">
-              {project.decisions.map(decision => (
-                <div
-                  key={decision.id}
-                  className="bg-bg-surface border border-border rounded-lg p-4"
-                >
-                  <p className="text-text-primary text-sm mb-2">{decision.decision}</p>
-                  <p className="text-text-muted text-xs">{formatDate(decision.createdAt)}</p>
-                </div>
-              ))}
-            </div>
-          )}
+          <DecisionList
+            projectId={project.id}
+            decisions={project.decisions}
+            isLoggingDecision={isLoggingDecision}
+            setIsLoggingDecision={setIsLoggingDecision}
+          />
         </div>
 
       </div>
