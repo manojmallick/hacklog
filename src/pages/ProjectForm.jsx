@@ -32,6 +32,8 @@ function ProjectForm({ mode }) {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [lessonsLearned, setLessonsLearned] = useState('')
+  const [tags, setTags] = useState([])
+  const [tagInput, setTagInput] = useState('')
   const [links, setLinks] = useState([])
   const [errors, setErrors] = useState({})
   const [initialized, setInitialized] = useState(false)
@@ -47,6 +49,7 @@ function ProjectForm({ mode }) {
       setEndDate(existingProject.endDate || '')
       setLessonsLearned(existingProject.lessonsLearned || '')
       setLinks(existingProject.links ? existingProject.links.map(l => ({ ...l })) : [])
+      setTags(existingProject.tags ? [...existingProject.tags] : [])
       setInitialized(true)
     }
   }, [mode, existingProject, initialized])
@@ -121,6 +124,7 @@ function ProjectForm({ mode }) {
       endDate: END_DATE_STATUSES.includes(status) ? (endDate || null) : null,
       lessonsLearned: lessonsLearned.trim(),
       links,
+      tags,
     }
 
     if (mode === 'create') {
@@ -206,6 +210,64 @@ function ProjectForm({ mode }) {
               placeholder="React, Node, Postgres"
               className="w-full bg-bg-base border border-border rounded px-3 py-2 text-text-primary text-sm focus:outline-none focus:border-accent"
             />
+          </div>
+
+          {/* Tags */}
+          <div className="mb-4">
+            <label className="text-text-secondary text-sm block mb-1">Tags</label>
+            {/* Existing tags as chips */}
+            {tags.length > 0 && (
+              <div className="flex flex-wrap gap-1 mb-2">
+                {tags.map(tag => (
+                  <span
+                    key={tag}
+                    className="flex items-center gap-1 text-xs px-2 py-0.5 rounded bg-accent/10 text-accent border border-accent/20"
+                  >
+                    {tag}
+                    <button
+                      type="button"
+                      onClick={() => setTags(prev => prev.filter(t => t !== tag))}
+                      className="text-accent/60 hover:text-accent ml-0.5"
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+            {/* Input row */}
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={tagInput}
+                onChange={e => setTagInput(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ',') {
+                    e.preventDefault()
+                    const trimmed = tagInput.trim().replace(/,$/, '')
+                    if (trimmed && !tags.includes(trimmed)) {
+                      setTags(prev => [...prev, trimmed])
+                    }
+                    setTagInput('')
+                  }
+                }}
+                placeholder="Add tag…"
+                className="flex-1 bg-bg-base border border-border rounded px-3 py-2 text-text-primary text-sm focus:outline-none focus:border-accent"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  const trimmed = tagInput.trim()
+                  if (trimmed && !tags.includes(trimmed)) {
+                    setTags(prev => [...prev, trimmed])
+                  }
+                  setTagInput('')
+                }}
+                className="bg-bg-elevated border border-border text-text-secondary px-3 py-2 rounded text-sm hover:text-text-primary"
+              >
+                Add
+              </button>
+            </div>
           </div>
 
           {/* Start date */}

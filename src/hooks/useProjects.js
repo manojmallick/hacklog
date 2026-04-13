@@ -24,6 +24,7 @@ export function useProjects() {
       decisions: [],
       links: [],
       lessonsLearned: '',
+      tags: [],
       ...data,
       id: generateId(),
       createdAt: now,
