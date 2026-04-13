@@ -1,4 +1,4 @@
-function TagList({ stack }) {
+function TagList({ stack, onTagClick }) {
   if (!stack) return null
 
   const tags = stack.split(',').map(s => s.trim()).filter(Boolean)
@@ -7,14 +7,24 @@ function TagList({ stack }) {
 
   return (
     <div className="flex flex-wrap gap-1">
-      {tags.map(tag => (
-        <span
-          key={tag}
-          className="text-xs px-2 py-0.5 rounded bg-bg-elevated text-text-secondary"
-        >
-          {tag}
-        </span>
-      ))}
+      {tags.map(tag =>
+        onTagClick ? (
+          <button
+            key={tag}
+            onClick={(e) => { e.preventDefault(); onTagClick(tag) }}
+            className="text-xs px-2 py-0.5 rounded bg-bg-elevated text-text-secondary cursor-pointer hover:bg-bg-base"
+          >
+            {tag}
+          </button>
+        ) : (
+          <span
+            key={tag}
+            className="text-xs px-2 py-0.5 rounded bg-bg-elevated text-text-secondary"
+          >
+            {tag}
+          </span>
+        )
+      )}
     </div>
   )
 }

@@ -7,12 +7,15 @@ import ProjectCard from '../components/ProjectCard'
 function Dashboard() {
   const { projects } = useProjectsContext()
   const [activeFilter, setActiveFilter] = useState('All')
+  const [activeTagFilter, setActiveTagFilter] = useState(null)
   const navigate = useNavigate()
 
-  const filteredProjects =
-    activeFilter === 'All'
-      ? projects
-      : projects.filter(p => p.status === activeFilter)
+  const filteredProjects = projects.filter(p => {
+    const matchesStatus = activeFilter === 'All' || p.status === activeFilter
+    const matchesTag = !activeTagFilter ||
+      p.stack.split(',').map(s => s.trim()).filter(Boolean).includes(activeTagFilter)
+    return matchesStatus && matchesTag
+  })
 
   return (
     <div className="min-h-screen bg-bg-base">
@@ -35,6 +38,16 @@ function Dashboard() {
             activeFilter={activeFilter}
             onFilterChange={setActiveFilter}
           />
+          {activeTagFilter && (
+            <div className="flex items-center gap-2 mt-3">
+              <button
+                onClick={() => setActiveTagFilter(null)}
+                className="flex items-center gap-1 text-xs bg-bg-elevated border border-accent text-accent px-2 py-0.5 rounded hover:bg-bg-base transition-colors"
+              >
+                <span>× {activeTagFilter}</span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Project grid or empty state */}
@@ -47,7 +60,7 @@ function Dashboard() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredProjects.map(project => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard key={project.id} project={project} onTagClick={(tag) => setActiveTagFilter(prev => prev === tag ? null : tag)} />
             ))}
           </div>
         )}

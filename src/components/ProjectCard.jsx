@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import StatusBadge from './ui/StatusBadge'
 import TagList from './ui/TagList'
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, onTagClick }) {
   return (
     <Link
       to={`/projects/${project.id}`}
@@ -17,7 +17,7 @@ function ProjectCard({ project }) {
           {project.description}
         </p>
       )}
-      <TagList stack={project.stack} />
+      <TagList stack={project.stack} onTagClick={onTagClick} />
     </Link>
   )
 }
