@@ -91,6 +91,22 @@ function ProjectDetail() {
           </div>
         )}
 
+        {/* Custom tags */}
+        {project.tags && project.tags.length > 0 && (
+          <div className="mb-6">
+            <div className="flex flex-wrap gap-1">
+              {project.tags.map(tag => (
+                <span
+                  key={tag}
+                  className="text-xs px-2 py-0.5 rounded bg-accent/10 text-accent border border-accent/20"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Dates */}
         {(project.startDate || showEndDate) && (
           <div className="flex flex-wrap gap-6 mb-6 text-sm">

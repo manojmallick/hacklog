@@ -18,6 +18,29 @@ function ProjectCard({ project, onTagClick }) {
         </p>
       )}
       <TagList stack={project.stack} onTagClick={onTagClick} />
+      {project.tags && project.tags.length > 0 && (
+        <div className="flex flex-wrap gap-1 mt-1">
+          {project.tags.map(tag => (
+            onTagClick ? (
+              <button
+                key={tag}
+                type="button"
+                onClick={(e) => { e.preventDefault(); onTagClick(tag) }}
+                className="text-xs px-2 py-0.5 rounded bg-accent/10 text-accent border border-accent/20 cursor-pointer hover:bg-accent/20"
+              >
+                {tag}
+              </button>
+            ) : (
+              <span
+                key={tag}
+                className="text-xs px-2 py-0.5 rounded bg-accent/10 text-accent border border-accent/20"
+              >
+                {tag}
+              </span>
+            )
+          ))}
+        </div>
+      )}
     </Link>
   )
 }

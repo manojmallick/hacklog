@@ -13,7 +13,8 @@ function Dashboard() {
   const filteredProjects = projects.filter(p => {
     const matchesStatus = activeFilter === 'All' || p.status === activeFilter
     const matchesTag = !activeTagFilter ||
-      p.stack.split(',').map(s => s.trim()).filter(Boolean).includes(activeTagFilter)
+      p.stack.split(',').map(s => s.trim()).filter(Boolean).includes(activeTagFilter) ||
+      (p.tags && p.tags.includes(activeTagFilter))
     return matchesStatus && matchesTag
   })
 
