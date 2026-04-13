@@ -133,8 +133,8 @@ function ProjectDetail() {
         {/* Lessons learned */}
         {project.lessonsLearned && (
           <div className="mb-6">
-            <p className="text-text-muted text-xs mb-2">Lessons learned</p>
-            <div className="bg-bg-elevated border border-border rounded-lg p-4">
+            <p className="text-text-muted text-xs uppercase tracking-wide mb-2">Lessons learned</p>
+            <div className="bg-bg-elevated border border-border border-l-2 border-l-accent rounded-lg p-4">
               <p className="text-text-secondary text-sm leading-relaxed whitespace-pre-wrap">
                 {project.lessonsLearned}
               </p>
